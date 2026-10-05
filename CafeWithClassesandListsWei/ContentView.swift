@@ -19,7 +19,7 @@ class AppData{
 
 struct ContentView: View {
     
-    @State var menu = [Item(name: "Uranium", price: 4.74, calories: 20000000, image: "Uranium")]
+    @State var menu = [Item(name: "Coffee", price: 2, calories: 0, image: "Coffee"), Item(name: "Sandwich", price: 8, calories: 500, image: "Sandwich"), Item(name: "Apple", price: 2, calories: 80, image: "Apple"), Item(name: "Muffin", price: 3, calories: 300, image: "Muffin"), Item(name: "Bagel", price: 3, calories: 250, image: "Bagel")]
     
     var body: some View {
         NavigationView{
@@ -32,6 +32,7 @@ struct ContentView: View {
                                 Image(food.image)
                                     .resizable()
                                     .scaledToFit()
+                                    .frame(maxWidth: 150, maxHeight: 150)
                             }
                             NavigationLink("") {
                                 ItemView(item: food.name, price: food.price, calories: food.calories, image: food.image)

@@ -12,6 +12,7 @@ struct ItemView: View {
     var price: Double
     var calories: Int
     var image: String
+    var quantity = 0
     var body: some View {
         VStack{
             Text(item)
@@ -19,7 +20,18 @@ struct ItemView: View {
             Image(image)
                 .resizable()
                 .scaledToFit()
-            
+            HStack{
+                RoundedRectangle(cornerRadius: 20)
+                    .overlay {
+                        Text(String(quantity))
+                    }
+                    .frame(width: 100, height: 50)
+                    .foregroundStyle(.blue)
+                Button("Add to cart"){
+                    
+                }
+                .buttonStyle(.borderedProminent)
+            }
         }
     }
 }
