@@ -8,11 +8,22 @@
 import SwiftUI
 
 struct ItemView: View {
+    var item: String
+    var price: Double
+    var calories: Int
+    var image: String
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack{
+            Text(item)
+                .font(.custom("Georgia", size: 60, relativeTo: .headline))
+            Image(image)
+                .resizable()
+                .scaledToFit()
+            
+        }
     }
 }
 
 #Preview {
-    ItemView()
+    ItemView(item: "N/A", price: 0, calories: 0, image:"Default")
 }

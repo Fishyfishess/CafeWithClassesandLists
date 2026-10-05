@@ -6,3 +6,16 @@
 //
 
 import Foundation
+class Item{
+    var name: String
+    var price: Double
+    var calories: Int
+    var image: String
+    
+    init(name: String, price: Double, calories: Int, image: String) {
+        self.name = name
+        self.price = price
+        self.calories = calories
+        self.image = image
+    }
+}
