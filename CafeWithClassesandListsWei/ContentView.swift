@@ -10,7 +10,7 @@ import SwiftUI
 class AppData{
     static let shared = AppData()
     
-    var userCart: [Int] = []
+    var userCart: [String:Int] = [:]
     
     init(){
         
@@ -25,21 +25,37 @@ struct ContentView: View {
         NavigationView{
             VStack {
                 List{
-                    ForEach(menu, id: \.name){ food in
+                    ForEach(menu, id: \.name){ item in
                         ZStack{
                             HStack{
-                                Text("\(food.name): $\(food.price.formatted(.number))")
-                                Image(food.image)
+                                Text("\(item.name): $\(item.price.formatted())")
+                                
+                                Image(item.image)
                                     .resizable()
                                     .scaledToFit()
                                     .frame(maxWidth: 150, maxHeight: 150)
                             }
                             NavigationLink("") {
-                                ItemView(item: food.name, price: food.price, calories: food.calories, image: food.image)
+                                ItemView(item: item)
                             }
                         }
                         .padding()
                     }
+//                    ForEach(menu, id: \.price){ item in
+//                        ZStack{
+//                            HStack{
+//                                Text("\(item.name): $\(item.price.formatted(.number))")
+//                                Image(item.image)
+//                                    .resizable()
+//                                    .scaledToFit()
+//                                    .frame(maxWidth: 150, maxHeight: 150)
+//                                NavigationLink(""){
+//                                    ItemView(item: item)
+//                                }
+//                                
+//                            }
+//                        }
+//                    }
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 20))
             }

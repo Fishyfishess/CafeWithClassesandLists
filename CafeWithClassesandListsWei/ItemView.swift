@@ -8,34 +8,39 @@
 import SwiftUI
 
 struct ItemView: View {
-    var item: String
-    var price: Double
-    var calories: Int
-    var image: String
-    var quantity = 0
+    @State var item: Item
     var body: some View {
         VStack{
-            Text(item)
+            Text(item.name)
                 .font(.custom("Georgia", size: 60, relativeTo: .headline))
-            Image(image)
+            Image(item.image)
                 .resizable()
                 .scaledToFit()
             HStack{
-                RoundedRectangle(cornerRadius: 20)
+                Text("Quantity: \(item.quantity)")
+                    .padding()
                     .overlay {
-                        Text(String(quantity))
+                        RoundedRectangle(cornerRadius: 20)
+                            .foregroundStyle(.blue)
                     }
-                    .frame(width: 100, height: 50)
+                RoundedRectangle(cornerRadius: 20)
                     .foregroundStyle(.blue)
+                    .overlay {
+                        <#code#>
+                    }
+                Stepper(String(item.quantity), value: $item.quantity)
+                    .labelsHidden()
                 Button("Add to cart"){
-                    
+                    AppData().userCart[item.name] = item.quantity
+                    item.quantity = 1
                 }
                 .buttonStyle(.borderedProminent)
             }
+            .padding()
         }
     }
 }
 
 #Preview {
-    ItemView(item: "N/A", price: 0, calories: 0, image:"Default")
+    ItemView(item: Item(name: "N/A", price: 0, calories: 0, image: ""))//item: "N/A", price: 0, calories: 0, image:"Default")
 }
