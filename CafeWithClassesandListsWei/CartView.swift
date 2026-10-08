@@ -8,8 +8,41 @@
 import SwiftUI
 
 struct CartView: View {
+    
+    @State var total = 0.0
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack{
+            Text("Your cart")
+            List{
+                ForEach(Array(AppData.shared.userCart.keys), id: \.self){item in
+                    HStack{
+                        Text("\(item)")
+                        
+                        if let x = AppData.shared.userCart[item]{
+                            HStack{
+                                Text("Quantity: \(x)")
+                                if let y = AppData.shared.userCartCost[item]{
+                                    Text("Price: \(y.formatted(.currency(code: "USD")))")
+                                }
+                            }
+                        } else {
+                            HStack{
+                                Text("Quantity: N/A")
+                                Text("Price: N/A")
+                            }
+                        }
+                    }
+                }
+            }
+            .onAppear {
+                for(_, b) in AppData.shared.userCartCost{
+                    total += b
+                }
+            }
+            Text("Cart total: \(total.formatted(.currency(code: "USD")))")
+        }
+        .padding()
     }
 }
 

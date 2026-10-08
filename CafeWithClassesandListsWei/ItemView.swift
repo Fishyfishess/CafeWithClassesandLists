@@ -6,6 +6,7 @@
 //
 import SwiftUI
 struct ItemView: View {
+    @Environment(\.dismiss) private var dismiss
     @State var item: Item
     var body: some View {
         VStack{
@@ -19,11 +20,7 @@ struct ItemView: View {
                     .padding()
                     .background(.blue)
                     .background(in: RoundedRectangle(cornerRadius: 10))
-//                RoundedRectangle(cornerRadius: 20)
-//                    .foregroundStyle(.blue)
-//                    .overlay {
-//                        Text("Quantity: \(item.quantity)")
-//                    }
+                    //.font(.custom("G", size: <#T##CGFloat#>))
                 Stepper(String(item.quantity), value: $item.quantity)
                     .labelsHidden()
                     .padding()
@@ -32,12 +29,12 @@ struct ItemView: View {
             Button("Add to cart"){
                 AppData.shared.userCart[item.name] = item.quantity
                 AppData.shared.userCartCost[item.name] = Double(item.quantity) * item.price
-                print(AppData.shared.userCart[item.name])
-                print(AppData.shared.userCartCost[item.name])
                 item.quantity = 1
+                dismiss()
             }
             .buttonStyle(.borderedProminent)
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 #Preview {
