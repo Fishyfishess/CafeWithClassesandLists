@@ -6,3 +6,12 @@
 //
 
 import Foundation
+class Ingredients{
+    var ingredients: [String]
+    var item: String
+    
+    init(ingredients: [String], item: String) {
+        self.ingredients = ingredients
+        self.item = item
+    }
+}

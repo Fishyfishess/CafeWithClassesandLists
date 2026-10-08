@@ -40,6 +40,7 @@ struct CartView: View {
                     total += b
                 }
             }
+            .clipShape(RoundedRectangle(cornerRadius: 20))
             Text("Cart total: \(total.formatted(.currency(code: "USD")))")
         }
         .padding()

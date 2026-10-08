@@ -11,6 +11,7 @@ class AppData{
     
     var userCart: [String:Int] = [:]
     var userCartCost: [String:Double] = [:]
+    var totalItems = 0
     
     init(){
         
@@ -18,21 +19,24 @@ class AppData{
 }
 struct ContentView: View {
     
-    @State var menu = [Item(name: "Coffee", price: 2, calories: 0, image: "Coffee"), Item(name: "Sandwich", price: 8, calories: 500, image: "Sandwich"), Item(name: "Apple", price: 2, calories: 80, image: "Apple"), Item(name: "Muffin", price: 3, calories: 300, image: "Muffin"), Item(name: "Bagel", price: 3, calories: 250, image: "Bagel")]
+    @State var menu = [Item(name: "Coffee", price: 2, calories: 0, image: "Coffee", ingredients: Ingredients(ingredients: ["water", "coffee bean", "milk", "sugar"], item: "Coffee")), Item(name: "Sandwich", price: 8, calories: 500, image: "Sandwich", ingredients: Ingredients(ingredients: ["Bread", "ham", "cheese", "mayo", "tomato", "lettuce"], item: "Sandwich")), Item(name: "Apple", price: 2, calories: 80, image: "Apple", ingredients: Ingredients(ingredients: ["apple"], item: "Apple")), Item(name: "Muffin", price: 3, calories: 300, image: "Muffin", ingredients: Ingredients(ingredients: ["flour", "sugar", "baking powder", "salt", "butter", "egg", "milk", "chocolate chips"], item: "Muffin")), Item(name: "Bagel", price: 3, calories: 250, image: "Bagel", ingredients: Ingredients(ingredients: ["sugar", "flour", "yeast", "salt", "seasoning"], item: "Bagel"))]
     
     var body: some View {
         NavigationView{
             VStack {
+                Text("Cafe")
+                    .font(.largeTitle)
                 List{
                     ForEach(menu, id: \.name){ item in
                         ZStack{
                             HStack{
                                 Text("\(item.name): $\(item.price.formatted())")
-                                
-//                                Image(item.image)
-//                                    .resizable()
-//                                    .scaledToFit()
-//                                    .frame(maxWidth: 150, maxHeight: 150)
+                                Spacer()
+                                Image(item.image)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(maxWidth: 75, maxHeight: 75)
+                                Spacer()
                             }
                             NavigationLink("") {
                                 ItemView(item: item)
@@ -41,9 +45,6 @@ struct ContentView: View {
                     }
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 20))
-                NavigationLink("cart hehe"){
-                    CartView()
-                }
                 
             }
             .padding()
@@ -55,6 +56,7 @@ struct ContentView: View {
                         Image(systemName: "cart.fill")
                             .resizable()
                             .frame(width: 50, height: 50)
+                        Text("\(AppData.shared.totalItems)")
                     }
                     .frame(width: 100, height: 60)
                 }

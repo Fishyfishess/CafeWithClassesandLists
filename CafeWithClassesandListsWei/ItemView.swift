@@ -15,12 +15,29 @@ struct ItemView: View {
             Image(item.image)
                 .resizable()
                 .scaledToFit()
+            ZStack{
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(.regularMaterial)
+                VStack{
+                    Text("Ingredients")
+                        .font(.largeTitle)
+                        .padding()
+                    ScrollView {
+                        ForEach(item.ingredients.ingredients, id: \.self){ ingredient in
+                            Text(ingredient)
+                                .padding()
+                                .frame(width: 300)
+                        }
+                    }
+                }
+            }
+            .padding()
             HStack{
                 Text("Quantity: \(item.quantity)")
                     .padding()
                     .background(.blue)
                     .background(in: RoundedRectangle(cornerRadius: 10))
-                    //.font(.custom("G", size: <#T##CGFloat#>))
+                    .foregroundStyle(.white)
                 Stepper(String(item.quantity), value: $item.quantity)
                     .labelsHidden()
                     .padding()
@@ -30,15 +47,18 @@ struct ItemView: View {
                 AppData.shared.userCart[item.name] = item.quantity
                 AppData.shared.userCartCost[item.name] = Double(item.quantity) * item.price
                 item.quantity = 1
+                AppData.shared.totalItems = 0
+                for(_,b) in AppData.shared.userCart{
+                    AppData.shared.totalItems += b
+                }
                 dismiss()
             }
             .buttonStyle(.borderedProminent)
         }
-        .navigationBarBackButtonHidden(true)
     }
 }
 #Preview {
-    ItemView(item: Item(name: "N/A", price: 0, calories: 0, image: ""))//item: "N/A", price: 0, calories: 0, image:"Default")
+    ItemView(item: Item(name: "N/A", price: 0, calories: 0, image: "", ingredients: Ingredients(ingredients: ["N/A"], item: "N/A")))
 }
 
 
