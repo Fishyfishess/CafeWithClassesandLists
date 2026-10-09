@@ -7,11 +7,11 @@
 
 import Foundation
 class Ingredients{
-    var ingredients: [String]
-    var item: String
+    var ingredient: String
+    var allergen: Bool
     
-    init(ingredients: [String], item: String) {
-        self.ingredients = ingredients
-        self.item = item
+    init(ingredient: String, allergen: Bool) {
+        self.ingredient = ingredient
+        self.allergen = allergen
     }
 }

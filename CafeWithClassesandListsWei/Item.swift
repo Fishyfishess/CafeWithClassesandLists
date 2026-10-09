@@ -12,9 +12,9 @@ class Item{
     var calories: Int
     var image: String
     var quantity = 1
-    var ingredients: Ingredients
+    var ingredients: [Ingredients]
     
-    init(name: String, price: Double, calories: Int, image: String, ingredients: Ingredients) {
+    init(name: String, price: Double, calories: Int, image: String, ingredients: [Ingredients]) {
         self.name = name
         self.price = price
         self.calories = calories

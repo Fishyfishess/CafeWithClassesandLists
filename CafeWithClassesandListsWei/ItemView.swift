@@ -8,6 +8,8 @@ import SwiftUI
 struct ItemView: View {
     @Environment(\.dismiss) private var dismiss
     @State var item: Item
+    @State var ingredients:[String] = []
+    @State var counter = 0
     var body: some View {
         VStack{
             Text(item.name)
@@ -23,11 +25,24 @@ struct ItemView: View {
                         .font(.largeTitle)
                         .padding()
                     ScrollView {
-                        ForEach(item.ingredients.ingredients, id: \.self){ ingredient in
-                            Text(ingredient)
-                                .padding()
-                                .frame(width: 300)
+                        ForEach(ingredients, id: \.self){ ingredient in
+                            HStack{
+                                Text(ingredient)
+                                    .padding()
+                                    .frame(width: 250)
+                                Button("remove"){
+                                    if let x = ingredients.firstIndex(of: ingredient){
+                                        ingredients.remove(at: x)
+                                    }
+                                }
+                                    
+                            }
                         }
+                    }
+                }
+                .onAppear {
+                    for ingredient in item.ingredients {
+                        ingredients.append(ingredient.ingredient)
                     }
                 }
             }
@@ -58,7 +73,7 @@ struct ItemView: View {
     }
 }
 #Preview {
-    ItemView(item: Item(name: "N/A", price: 0, calories: 0, image: "", ingredients: Ingredients(ingredients: ["N/A"], item: "N/A")))
+    ItemView(item: Item(name: "N/A", price: 0, calories: 0, image: "", ingredients: [Ingredients(ingredient: "N/A", allergen: false)]))
 }
 
 

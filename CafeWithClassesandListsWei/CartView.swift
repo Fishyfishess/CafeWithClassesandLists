@@ -18,17 +18,22 @@ struct CartView: View {
                 ForEach(Array(AppData.shared.userCart.keys), id: \.self){item in
                     HStack{
                         Text("\(item)")
+                        Text("|")
                         
                         if let x = AppData.shared.userCart[item]{
                             HStack{
                                 Text("Quantity: \(x)")
+                                Text("|")
                                 if let y = AppData.shared.userCartCost[item]{
                                     Text("Price: \(y.formatted(.currency(code: "USD")))")
+                                } else {
+                                    Text("N/A")
                                 }
                             }
                         } else {
                             HStack{
                                 Text("Quantity: N/A")
+                                Text("|")
                                 Text("Price: N/A")
                             }
                         }
