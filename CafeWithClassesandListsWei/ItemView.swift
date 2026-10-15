@@ -66,6 +66,9 @@ struct ItemView: View {
                 for(_,b) in AppData.shared.userCart{
                     AppData.shared.totalItems += b
                 }
+                UserDefaults.standard.set(AppData.shared.userCart, forKey: "userCart")
+                UserDefaults.standard.set(AppData.shared.userCartCost, forKey: "userCartCost")
+                UserDefaults.standard.set(AppData.shared.totalItems, forKey: "totalItems")
                 dismiss()
             }
             .buttonStyle(.borderedProminent)

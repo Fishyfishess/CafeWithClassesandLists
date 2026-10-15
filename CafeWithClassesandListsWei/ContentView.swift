@@ -13,7 +13,7 @@ class AppData{
     var userCartCost: [String:Double] = [:]
     var totalItems = 0
     
-    init(){
+    private init(){
         
     }
 }
@@ -58,9 +58,14 @@ struct ContentView: View {
                             .frame(width: 40, height: 40)
                         Text("\(AppData.shared.totalItems)")
                     }
-                    .frame(width: 80, height: 100)
+                    .frame(width: 80, height: 50)
                     .buttonStyle(.plain)
                 }
+            }
+            .onAppear {
+                AppData.shared.totalItems = UserDefaults.standard.integer(forKey: "totalItems")
+                AppData.shared.userCart = UserDefaults.standard.dictionary(forKey: "userCart") as? [String : Int] ?? [:]
+                AppData.shared.userCartCost = UserDefaults.standard.dictionary(forKey: "userCartCost") as? [String : Double] ?? [:]
             }
         }
     }
