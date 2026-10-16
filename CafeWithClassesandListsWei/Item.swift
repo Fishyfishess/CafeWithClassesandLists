@@ -13,6 +13,7 @@ class Item{
     var image: String
     var quantity = 1
     var ingredients: [Ingredients]
+    var uid = UUID() // generates a unique uid for each object, used for looping thru foreach loops
     
     init(name: String, price: Double, calories: Int, image: String, ingredients: [Ingredients]) {
         self.name = name

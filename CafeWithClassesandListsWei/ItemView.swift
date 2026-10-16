@@ -10,6 +10,7 @@ struct ItemView: View {
     @State var item: Item
     @State var ingredients:[String] = []
     @State var counter = 0
+    @State var remove = false
     var body: some View {
         VStack{
             Text(item.name)
@@ -30,11 +31,19 @@ struct ItemView: View {
                                 Text(ingredient)
                                     .padding()
                                     .frame(width: 250)
-                                Button("remove"){
+                                Button(remove ? "are you sure?" : "remove"){
                                     if let x = ingredients.firstIndex(of: ingredient){
-                                        ingredients.remove(at: x)
+                                        if remove {
+                                            ingredients.remove(at: x)
+                                        }
+                                    }
+                                    remove.toggle()
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 2){
+                                        remove.toggle()
                                     }
                                 }
+                                .foregroundStyle(remove ? .red : .blue)
+                                .animation(.easeInOut, value: remove)
                                     
                             }
                         }
