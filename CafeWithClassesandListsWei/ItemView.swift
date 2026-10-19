@@ -10,7 +10,7 @@ struct ItemView: View {
     @State var item: Item
     @State var ingredients:[String] = []
     @State var counter = 0
-    @State var remove = false
+    @State var remove:[Bool] = [false]
     var body: some View {
         VStack{
             Text(item.name)
@@ -28,22 +28,23 @@ struct ItemView: View {
                     ScrollView {
                         ForEach(ingredients, id: \.self){ ingredient in
                             HStack{
+                                let y = ingredients.firstIndex(of: ingredient) ?? 0
                                 Text(ingredient)
                                     .padding()
                                     .frame(width: 250)
-                                Button(remove ? "are you sure?" : "remove"){
+                                Button(remove[y] ? "are you sure?" : "remove"){
                                     if let x = ingredients.firstIndex(of: ingredient){
-                                        if remove {
+                                        if remove[y] {
                                             ingredients.remove(at: x)
                                         }
                                     }
-                                    remove.toggle()
+                                    remove[y].toggle()
                                     DispatchQueue.main.asyncAfter(deadline: .now() + 2){
-                                        remove.toggle()
+                                        remove[y].toggle()
                                     }
                                 }
-                                .foregroundStyle(remove ? .red : .blue)
-                                .animation(.easeInOut, value: remove)
+                                .foregroundStyle(remove[y] ? .red : .blue)
+                                .animation(.easeInOut, value: remove[y])
                                     
                             }
                         }
@@ -81,6 +82,11 @@ struct ItemView: View {
                 dismiss()
             }
             .buttonStyle(.borderedProminent)
+        }
+        .onAppear {
+            for _ in ingredients {
+                remove.append(false)
+            }
         }
     }
 }
