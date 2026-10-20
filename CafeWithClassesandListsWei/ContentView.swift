@@ -63,12 +63,12 @@ struct ContentView: View {
                     .buttonStyle(.plain)
                     .simultaneousGesture(TapGesture().onEnded{
                         cartAnim.toggle()
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2){
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
                             cartAnim.toggle()
                         }
                     })
                     .foregroundStyle(cartAnim ? .black : .blue)
-                    .animation(.default, value: cartAnim)
+                    .animation(.spring, value: cartAnim)
                 }
             }
             .onAppear {

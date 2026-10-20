@@ -12,6 +12,7 @@ struct ItemView: View {
     @State var counter = 0
     @State var remove:[Bool] = [false]
     @State var greenBlue = 1.0
+    @State var rotationDegree = 0.0
     var body: some View {
         VStack{
             Text(item.name)
@@ -19,6 +20,15 @@ struct ItemView: View {
             Image(item.image)
                 .resizable()
                 .scaledToFit()
+                .onTapGesture {
+                    withAnimation(.smooth.repeatForever(autoreverses: true)) {
+                        rotationDegree = 20
+                    }
+//                    withAnimation(.default.delay(0.5)){
+//                        rotationDegree -= 90
+//                    }
+                }
+                .rotationEffect(.degrees(rotationDegree))
             ZStack{
                 RoundedRectangle(cornerRadius: 20)
                     .fill(.regularMaterial)
@@ -41,11 +51,11 @@ struct ItemView: View {
                                     }
                                     remove[y].toggle()
                                     DispatchQueue.main.asyncAfter(deadline: .now() + 2){
-                                        remove[y].toggle()
+                                        remove[y] = false
                                     }
                                 }
                                 .foregroundStyle(remove[y] ? .red : .blue)
-                                .animation(.easeInOut, value: remove[y])
+                                .animation(.easeIn, value: remove[y])
                                     
                             }
                         }
