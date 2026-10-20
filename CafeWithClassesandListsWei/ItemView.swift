@@ -11,6 +11,7 @@ struct ItemView: View {
     @State var ingredients:[String] = []
     @State var counter = 0
     @State var remove:[Bool] = [false]
+    @State var greenBlue = 1.0
     var body: some View {
         VStack{
             Text(item.name)
@@ -62,10 +63,26 @@ struct ItemView: View {
                     .padding()
                     .background(.blue)
                     .background(in: RoundedRectangle(cornerRadius: 10))
-                    .foregroundStyle(.white)
-                Stepper(String(item.quantity), value: $item.quantity)
-                    .labelsHidden()
-                    .padding()
+                    .foregroundStyle(Color(red: 1, green: greenBlue, blue: greenBlue))
+                    .animation(.default, value: greenBlue)
+//                Stepper(String(item.quantity), value: $item.quantity)
+//                    .labelsHidden()
+//                    .padding()
+                Stepper {
+                } onIncrement: {
+                    item.quantity += 1
+                    if greenBlue <= 1 {
+                        greenBlue = 1 - (0.01 * Double(item.quantity))
+                    }
+                } onDecrement: {
+                    item.quantity -= 1
+                    if greenBlue <= 1 {
+                        greenBlue = 1 - (0.01 * Double(item.quantity))
+                    }
+                }
+                .padding()
+                .labelsHidden()
+
             }
             .padding()
             Button("Add to cart"){
@@ -81,7 +98,6 @@ struct ItemView: View {
                 UserDefaults.standard.set(AppData.shared.totalItems, forKey: "totalItems")
                 dismiss()
             }
-            .buttonStyle(.borderedProminent)
         }
         .onAppear {
             for _ in ingredients {
